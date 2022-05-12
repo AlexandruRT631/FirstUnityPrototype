@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     // private Vector3 _oldPos;
     // public float currentVerticalSpeed = 0.0f;
     public float maxVerticalSpeed = 0.1f;
-    public float fakeInput = 1.0f;
+    public float fakeForwardInput = 1.0f;
+    public float fakeHorizontalInput = 1.0f;
 
     // Start is called before the first frame update
     public void Start()
@@ -44,23 +45,37 @@ public class PlayerController : MonoBehaviour
         // rb.AddForce(movement * Time.deltaTime * speed);
         if (Mathf.Abs(rb.velocity.y) < maxVerticalSpeed)
         {
-            fakeInput = forwardInput;
+            fakeForwardInput = forwardInput;
             transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
+
+            // Turn the vehicle based on horizontal and forward input
+            fakeHorizontalInput = horizontalInput;
+            transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput * forwardInput);
         }
         else
         {
-            if (fakeInput < 0.01f && fakeInput > -0.01f)
+            if (fakeForwardInput < 0.01f && fakeForwardInput > -0.01f)
             {
-                fakeInput = 0f;
+                fakeForwardInput = 0f;
             }
             else
             {
-                fakeInput -= fakeInput / Mathf.Abs(fakeInput) * Time.deltaTime / speed;
+                fakeForwardInput -= fakeForwardInput / Mathf.Abs(fakeForwardInput) * Time.deltaTime / speed;
             }
-            transform.Translate(Vector3.forward * Time.deltaTime * speed * fakeInput);
+            transform.Translate(Vector3.forward * Time.deltaTime * speed * fakeForwardInput);
+            
+            if (fakeHorizontalInput < 0.01f && fakeHorizontalInput > -0.01f)
+            {
+                fakeHorizontalInput = 0f;
+            }
+            else
+            {
+                fakeHorizontalInput -= fakeHorizontalInput / Mathf.Abs(fakeHorizontalInput) * Time.deltaTime / speed;
+            }
+            transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * fakeHorizontalInput * fakeForwardInput);
         }
         // _oldPos = transform.position;
         // Turn the vehicle based on horizontal and forward input
-        transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput * forwardInput);
+        // transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput * forwardInput);
     }
 }
