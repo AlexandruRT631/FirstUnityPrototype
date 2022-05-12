@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public float maxVerticalSpeed = 0.1f;
     public float fakeForwardInput = 1.0f;
     public float fakeHorizontalInput = 1.0f;
+    public string horizAxis = "Horizontal";
+    public string vertiAxis = "Vertical";
 
     // Start is called before the first frame update
     public void Start()
@@ -28,8 +30,8 @@ public class PlayerController : MonoBehaviour
     public void Update()
     {
         // Getting player input
-        horizontalInput = Input.GetAxis("Horizontal");
-        forwardInput = Input.GetAxis("Vertical");
+        horizontalInput = Input.GetAxis(horizAxis);
+        forwardInput = Input.GetAxis(vertiAxis);
         // transform.rotation.y returns values from -1 to 1 instead of -180 to 180
         // var angle = transform.eulerAngles.y * Mathf.Deg2Rad;
         // movement = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * forwardInput;
