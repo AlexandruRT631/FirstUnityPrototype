@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 20.0f;
-    public float turnSpeed = 75.0f;
-    public float horizontalInput;
-    public float forwardInput;
+    [SerializeField] private float speed = 20.0f;
+    [SerializeField] private float turnSpeed = 75.0f;
+    [SerializeField] private float horizontalInput;
+    [SerializeField] private float forwardInput;
     // public float distToGround = 1.0f;
     // public bool grounded = false;
     public Rigidbody rb;
@@ -48,11 +48,11 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Abs(rb.velocity.y) < maxVerticalSpeed)
         {
             fakeForwardInput = forwardInput;
-            transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
+            transform.Translate(Vector3.forward * (Time.deltaTime * speed * forwardInput));
 
             // Turn the vehicle based on horizontal and forward input
             fakeHorizontalInput = horizontalInput;
-            transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput * forwardInput);
+            transform.Rotate(Vector3.up * (Time.deltaTime * turnSpeed * horizontalInput * forwardInput));
         }
         else
         {
@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
             {
                 fakeForwardInput -= fakeForwardInput / Mathf.Abs(fakeForwardInput) * Time.deltaTime / speed;
             }
-            transform.Translate(Vector3.forward * Time.deltaTime * speed * fakeForwardInput);
+            transform.Translate(Vector3.forward * (Time.deltaTime * speed * fakeForwardInput));
             
             if (fakeHorizontalInput < 0.01f && fakeHorizontalInput > -0.01f)
             {
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
             {
                 fakeHorizontalInput -= fakeHorizontalInput / Mathf.Abs(fakeHorizontalInput) * Time.deltaTime / speed;
             }
-            transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * fakeHorizontalInput * fakeForwardInput);
+            transform.Rotate(Vector3.up * (Time.deltaTime * turnSpeed * fakeHorizontalInput * fakeForwardInput));
         }
         // _oldPos = transform.position;
         // Turn the vehicle based on horizontal and forward input

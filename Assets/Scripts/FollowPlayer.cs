@@ -5,7 +5,7 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     public GameObject player;
-    private Vector3 _positionOffset;
+    [SerializeField] private Vector3 _positionOffset;
     private Quaternion _rotation;
     private int _fpc = 0;
 
